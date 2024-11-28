@@ -38,7 +38,7 @@ function App() {
     <div className="App">
       <header className="App-header">
       <Movies movies={movies} />
-        <SearchField value={searchField} onChange={handleChange} />
+      <SearchField value={searchField} onChange={handleChange} />
       </header>
     </div>
   );
