@@ -1,10 +1,22 @@
 import './Movie.css';
+import { useState} from 'react';
 
 function Movie({ movie }) {
     let { poster, name, alternativeName, year } = movie;
 
     let imageUrl = poster.previewUrl || 
     'https://png.pngtree.com/png-vector/20220626/ourmid/pngtree-cinema-clapper-movie-thing-video-device-clap-black-icon-action-studio-png-image_5472994.png'
+
+    const colors = ['aquamarine', 'cadetblue', 'aqua', 'limegreen', 'lightgreen']
+    const [color, setColor] = useState(0)
+    const changeBG = () => {
+        let newColor = Math.floor(Math.random() * colors.length)
+        while (color === newColor) {
+            newColor = Math.floor(Math.random() * colors.length)
+        }
+        setColor(newColor)
+    }
+
 
     let maxNameLength = 17
     const reduceName = name => {
@@ -27,7 +39,10 @@ function Movie({ movie }) {
         return result + '...'
     }
 
-    return (<div className="movie movie-card">
+    return (<div 
+            onMouseEnter={changeBG} 
+            style={{background: colors [color]}}
+            className="movie movie-card">
 
         <img alt={name || alternativeName} 
         className='movie__poster' 

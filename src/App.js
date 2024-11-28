@@ -37,11 +37,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      {
-      loading ? <h1>Загрузка</h1> :
-      error ? <h1>Что-то пошло не так</h1> :
       <Movies movies={movies} />
-      }
         <SearchField value={searchField} onChange={handleChange} />
       </header>
     </div>
