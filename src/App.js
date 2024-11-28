@@ -3,6 +3,7 @@ import './App.css';
 import { APIKEY } from './env';
 import { useState, useEffect } from 'react'
 import Movies from './components/Movies/Movies'
+import SearchField from './components/SearchField/SearchField';
 
 function App() {
   let [searchField, setSearchField] = useState("")
@@ -36,8 +37,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <input type="text" onChange={handleChange} />
-        <Movies movies={movies} />
+      {
+      loading ? <h1>Загрузка</h1> :
+      error ? <h1>Что-то пошло не так</h1> :
+      <Movies movies={movies} />
+      }
+        <SearchField value={searchField} onChange={handleChange} />
       </header>
     </div>
   );
