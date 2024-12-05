@@ -1,47 +1,35 @@
 import logo from './logo.svg';
 import './App.css';
-import { APIKEY } from './env';
-import { useState, useEffect } from 'react'
-import Movies from './components/Movies/Movies'
-import SearchField from './components/SearchField/SearchField';
+import React, { useState, useEffect } from 'react';
+import './TrafficLight.css';
 
-function App() {
-  let [searchField, setSearchField] = useState("")
-  const URL = 'https://api.kinopoisk.dev/v1.4/movie/search?query='
+const TrafficLight = () => {
+const [light, setLight] = useState('red');
+const [isBlinking, setIsBlinking] = useState(false);
 
-  const [movies, setMovies] = useState([])
-
-  useEffect(() => {
-    async function fetchMovies() {
-      const res = await fetch(URL + searchField, {
-        headers: {
-          'X-API-KEY': APIKEY
-        }
-      })
-      const data = await res.json()
-      setMovies(data.docs)
+useEffect(() => {
+    let interval;
+    if (light === 'red') {
+    interval = setTimeout(() => setLight('red-yellow'), 4000);
+    } else if (light === 'red-yellow') {
+    interval = setTimeout(() => setLight('green'), 3000);
+    } else if (light === 'green') {
+    setIsBlinking(true);
+    interval = setTimeout(() => setLight('yellow'), 3000);
+    } else if (light === 'yellow') {
+    setIsBlinking(false);
+    interval = setTimeout(() => setLight('red'), 4000);
     }
+    return () => clearTimeout(interval);
+}, [light]);
 
-    fetchMovies()
-  }, [URL, searchField])
-
-  let timer;
-  function handleChange(event) {
-    clearTimeout(timer);
-
-    timer = setTimeout(() => {
-      setSearchField(event.target.value);
-    }, 1000)
-  }
-
-  return (
-    <div className="App">
-      <header className="App-header">
-      <Movies movies={movies} />
-      <SearchField value={searchField} onChange={handleChange} />
-      </header>
+return (
+    <div className="traffic-light">
+    <div className={`light red ${light === 'red' ? 'active' : ''}`}></div>
+    <div className={`light yellow ${light === 'red-yellow' || light === 'yellow' ? 'active' : ''}`}></div>
+    <div className={`light green ${isBlinking && light === 'green' ? 'blinking' : light === 'green' ? 'active' : ''}`}></div>
     </div>
-  );
-}
+);
+};
 
-export default App;
+export default TrafficLight;

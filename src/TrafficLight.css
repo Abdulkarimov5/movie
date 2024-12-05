@@ -1,0 +1,44 @@
+.traffic-light {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    height: 300px;
+    background-color: black;
+    border-radius: 10px;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.light {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    opacity: 0.3;
+    transition: opacity 0.5s;
+}
+
+.light.active {
+    opacity: 1;
+}
+
+.light.blinking {
+    animation: blinking 1s infinite;
+}
+
+@keyframes blinking {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.red {
+    background-color: red;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.green {
+    background-color: green;
+}
